@@ -1,3 +1,6 @@
+use std::fs;
+use std::error::Error;
+
 fn initialize_score_matrix(m: usize, n: usize, gap_penalty: i32) -> Vec<Vec<i32>> {
     let mut score = vec![vec![0; n + 1]; m + 1];
 
@@ -128,11 +131,12 @@ fn needleman_wunsch(seq1: &str, seq2: &str, match_score: i32, mismatch_penalty: 
     (aligned1, aligned2, score[m][n])
 }
 
-fn main() {
-    let seq1 = "GATTACA";
-    let seq2 = "GCATGCU";
-    let (aligned1, aligned2, score) = needleman_wunsch(seq1, seq2,
+fn main() -> Result<(), Box<dyn Error>> {
+    let seq1 = fs::read_to_string("src/data/HBB_wildtype.txt")?;
+    let seq2 = fs::read_to_string("src/data/HBB_sickle_cell_allele.txt")?;
+    let (aligned1, aligned2, score) = needleman_wunsch(&seq1, &seq2,
                                                        1, -1, -1);
 
     print_alignment(&aligned1, &aligned2, score);
+    Ok(())
 }
