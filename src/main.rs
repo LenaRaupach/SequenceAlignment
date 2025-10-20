@@ -89,7 +89,7 @@ fn traceback_alignment(
         }
     }
 
-    (aligned1, aligned2)
+    (aligned1.trim().parse().unwrap(), aligned2.trim().parse().unwrap())
 }
 
 fn print_alignment(aligned1: &str, aligned2: &str, score: i32) {
